@@ -19,13 +19,16 @@ def logIn():
         username = request.form.get("username")
         password = request.form.get("pass")
 
-        # UserAPI GET Request and Response..
-        api_userdata = requests.get(f'http://127.0.0.1:5000/api/user/{username}') 
-        v1 = api_userdata.status_code
-        # api_userdata = api_userdata.content
-        # print(api_userdata['username'])
-        api_userdata = api_userdata.json()
-        # api_userdata = jsonify(api_userdata)
+        try:
+            # UserAPI GET Request and Response..
+            api_userdata = requests.get(f'http://127.0.0.1:5000/api/user/{username}') 
+            v1 = api_userdata.status_code
+            # api_userdata = api_userdata.content
+            # print(api_userdata['username'])
+            api_userdata = api_userdata.json()
+            # api_userdata = jsonify(api_userdata)
+        except:
+            return redirect('/login')
 
         # IF NOT 200 =====>
         if v1 != 200: 
