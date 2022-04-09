@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> Register | QuantifiedSelf App </title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icons/favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/custom_validations.js') }}"></script> -->
+
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron mt-3 mb-3">
+        <h1 class="display-4"> Quantified Self App </h1>
+    </div>
+
+    <div>
+        <p>Track And Measure Your Habits And Activities</p>
+    </div>
+
+    <div>
+        <p>Register Please   &nbsp; <a href="/help" target="blank_">Get Help !</a></p>
+    </div>
+
+    <div>
+        <form action="/register" method="POST">  <!--Bootstrap Form-->
+            <div class="input-group mb-2">
+                <label for="username" class="form-label">Enter Your unique Username : &nbsp; </label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="your_unique_username" required>
+            </div>
+            <div class="input-group mb-2">
+                <label for="fname" class="form-label">Your First Name : &nbsp; </label>
+                <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name" required>
+            </div>
+            <div class="input-group mb-2">
+                <label for="lname" class="form-label">Your Last Name : &nbsp; </label>
+                <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name">
+            </div>
+            <div class="input-group mb-2">
+                <label for="pass" class="form-label">Enter Your Password : &nbsp; </label>
+                <input type="password" class="form-control" id="pass" name="pass" placeholder="********" required>
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
+    <div class="mt-3">
+        <p style="padding: 5px;"> 
+            <b> Already have an account? please </b> <a href="/login">LogIn Here</a> 
+        </p>
+    </div>
+</div>
+</body>
+</html>

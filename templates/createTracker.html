@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> Create Tracker | QuantifiedSelf </title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icons/favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/custom_validations.js') }}"></script> -->
+    <script>
+        function text(x) {
+            if (x==0) {
+                document.getElementById("mcqdiv").style.display = "block";
+                document.getElementById("numdiv").style.display = "none";
+            }
+            else {
+                document.getElementById("mcqdiv").style.display = "none";
+                document.getElementById("numdiv").style.display = "block";
+            }
+            return;
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="nav navbar-nav me-auto">
+                    <li class="active"><a class="nav-link" href="/">Home</a></li>
+                    <li><a class="nav-link" href="/contactus">Contact Us</a></li>
+                    <li><a class="nav-link" href="/about">About</a></li>
+                    <li><a class="nav-link" href="/help" target="blank_">Help</a></li>
+                    &nbsp; &nbsp;
+                    <!-- <li><a class="nav-link" href="#">Page 3</a></li> -->
+                    <span class="navbar-text" style="color: rgb(230, 230, 230);">
+                        <b> Hello, {{userdata["fname"]}}... </b>
+                    </span>
+                </ul>
+                <ul class="d-flex">
+                    <li class="nav-item">
+                        <a class="btn btn-primary" href="/profile/{{userdata['user_id']}}">Profile</a>
+                    </li> &nbsp;
+                    <li class="nav-item">
+                        <a class="btn btn-danger" href="/logout">LogOut</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+<div class="container">
+
+    <div class="mt-3 mb-3">
+        <h1 class="makecenter">Create a New Tracker</h1>
+    </div>
+
+    <div class=" border formborder shadow-sm">
+        <form action="/tracker/create" method="POST" id="create-tracker-form">
+            <div class="mb-3">
+                <label for="trackername" class="form-label"><b>Tracker Name : </b></label>
+                <input class="form-control" id="trackername" name="trackername" placeholder="New Tracker Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="trackerdescr" class="form-label"><b>Tracker Description : </b></label>
+                <textarea class="form-control" id="trackerdescr" name="trackerdescr" rows="2"></textarea>
+            </div>
+
+            <!-- START ~~~ DYNAMICALLY SHOW / HIDE USING JAVASCRIPT -->
+            <div class="mb-3">
+                <!-- <label for="trackertype" class="form-label">Tracker Type : </label> -->
+                <p><b>Tracker Type : </b></p>
+                <div>
+                    <label class="radio-inline">
+                        <input type="radio" name="trackertype" value="Multiple_Choice" onclick="text(0)" checked> Multiple Choice
+                    </label> &nbsp; &nbsp;
+                    <label class="radio-inline">
+                        <input type="radio" name="trackertype" value="Numerical" onclick="text(1)"> Numerical
+                    </label>
+                </div>
+            </div>
+
+            <!-- input field -->
+            <div class="mb-3" id="mcqdiv">
+                <label for="trackersettings" class="form-label">Tracker Settings : </label>
+                <input type="text" class="form-control" id="trackersettings" name="trackersettings" placeholder="Put CSV without any spaces">
+            </div>
+            <div class="mb-3" style="display: none;" id="numdiv">
+                <p> Great ! Go Ahead with your Numerical Value Settings.. </p>
+            </div>
+            <!-- END ~~~ DYNAMICALLY SHOW / HIDE USING JAVASCRIPT -->
+
+
+            <!-- Submit -->
+            <div>
+                <input class="btn btn-primary" type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+
+    
+</div>
+</body>
+</html>

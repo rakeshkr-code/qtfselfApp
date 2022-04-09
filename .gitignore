@@ -1,0 +1,6 @@
+.env/
+application/__pycache__/
+static/bootstrap/js/
+static/images/*.png
+static/images/*.jpg
+*.pdf

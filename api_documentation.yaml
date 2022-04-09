@@ -1,0 +1,415 @@
+openapi: 3.0.0
+info:
+  title: Qtf-Self App API Documentation
+  version: 1.0.0
+  description: 
+    Documentation Example...
+    <h2> ER Diagram </h2>
+    <h3> User Table Schema </h3> 
+    <table>
+      <thead>
+        <th>Column Name</th>
+        <th>Column Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>user_id</td>
+        <td>Integer</td>
+        <td>Primary Key, Auto Increment</td>
+      </tr>
+      <tr>
+        <td>user_name</td>
+        <td>Text</td>
+        <td>Unique, Not Null</td>
+      </tr>
+      <tr>
+        <td>fname</td>
+        <td>Text</td>
+        <td>Not Null</td>
+      </tr>
+      <tr>
+        <td>lname</td>
+        <td>Text</td>
+        <td> </td>
+      </tr>
+      <tr>
+        <td>password</td>
+        <td>Text</td>
+        <td>Not Null</td>
+      </tr>
+      </tbody>
+    </table>
+    
+    <h3> Tracker Table Schema </h3> 
+    <table>
+      <thead>
+        <th>Column Name</th>
+        <th>Column Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>tracker_id</td>
+        <td>Integer</td>
+        <td>Primary Key, Auto Increment</td>
+      </tr>
+      <tr>
+        <td>user_id</td>
+        <td>Integer</td>
+        <td>Foreign Key (user.user_id), Unique, Not Null</td>
+      </tr>
+      <tr>
+        <td>tracker_name</td>
+        <td>Text</td>
+        <td>Not Null</td>
+      </tr>
+      <tr>
+        <td>description</td>
+        <td>Text</td>
+        <td> </td>
+      </tr>
+      <tr>
+        <td>track_type</td>
+        <td>Text</td>
+        <td>Not Null</td>
+      </tr>
+      <tr>
+        <td>settings</td>
+        <td>Text</td>
+        <td> </td>
+      </tr>
+      </tbody>
+    </table>
+    
+    
+    
+    <h2> Error Codes </h2>
+    <table>
+      <thead>
+        <th> Resource </th>
+        <th> Error Code </th>
+        <th> Message </th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>User</td>
+        <td>USER01</td>
+        <td>Invalid username, simple string without spaces expected</td>
+      </tr>
+      <tr>
+        <td>Tracker</td>
+        <td>TRACKER01</td>
+        <td>Invalid Tracker Name, simple string expected.</td>
+      </tr>
+      <tr>
+        <td>Tracker</td>
+        <td>TRACKER02</td>
+        <td>Invalid Tracker Description, simple string expected.</td>
+      </tr>
+      <tr>
+        <td>Tracker</td>
+        <td>TRACKER03</td>
+        <td>Invalid track_type</td>
+      </tr>
+      <tr>
+        <td>Tracker</td>
+        <td>TRACKER04</td>
+        <td>Invalid settings</td>
+      </tr>
+      <tr>
+        <td>Tracker</td>
+        <td>TRACKER05</td>
+        <td>Invalid user_id / tracker_id</td>
+      </tr>
+      </tbody>
+    </table>
+    
+    <!-- --------------comment----------------- -->
+    
+    
+servers:
+  - url: http://127.0.0.1:5000/
+
+
+paths:
+  /api/user/{username}:
+    description: End point to Read a user resource with username = username.
+    get:
+      description: Operation to Read user resource.
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+            example: rakeshkr
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: user object
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                    example: 1
+                  username:
+                    type: string
+                    example: rakeshkr
+                  fname:
+                    type: string
+                    example: Rakesh
+                  lname:
+                    type: string
+                    example: Kr Mandal
+                  password:
+                    type: string
+                    example: a%bcd&efgh$hashed_password
+        '500':
+          description: Internal Server Error
+        '404':
+          description: Not Found, user does not exist !
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+
+  /api/alltrackers/{user_id}:
+    description: End point to read, update and delete a course resource with course_id = courseId.
+    get:
+      description: Operation to get all Trackers List.
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: course object
+                type: object
+                properties:
+                  alltrackers:
+                    type: object
+                    example: [{'tracker_id':3, 'tracker_name':'Running Tracker', 'last_log':''}, {'tracker_id':3, 'tracker_name':'Running Tracker', 'last_log':''}]
+        '500':
+          description: Internal Server Error
+        '404':
+          description: Invalid user_id or tracker_id
+
+
+
+  /api/tracker/{tracker_id}:
+    description: End point to read, update and delete a course resource with course_id = courseId.
+    get:
+      description: Operation to Read tracker resource.
+      parameters:
+        - in: path
+          name: tracker_id
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: course object
+                type: object
+                properties:
+                  tracker_id:
+                    type: integer
+                    example: 2
+                  user_id:
+                    type: integer
+                    example: 1
+                  tracker_name:
+                    type: string
+                    example: Running Tracker
+                  description:
+                    type: string
+                    example: Tracking daily running in kilometers
+                  track_type:
+                    type: string
+                    example: Numerical
+                  settings:
+                    type: string
+                    example: Null
+        '500':
+          description: Internal Server Error
+        '404':
+          description: Invalid user_id or tracker_id
+
+    put:
+      description: Operation to update the tracker resource.
+      parameters:
+        - in: path
+          name: tracker_id
+          required: true
+          schema:
+            type: integer
+            example: 2
+      requestBody:
+        description: track_type can take only 2 possible values - 'Numerical' or 'Multiple_Choice' which is case sensetive, If trac_type is Numerical then settings should be null, In case of Multiple_choice settings should be CSV without spaces
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tracker_name:
+                  type: string
+                  example: Running Tracker
+                description:
+                  type: string
+                  example: Tracking daily running in kilometers
+                settings:
+                  type: string
+                  example: Null
+      responses:
+        '200':
+          description: Successfuly updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tracker_id:
+                    type: integer
+                    example: 2
+                  user_id:
+                    type: integer
+                    example: 1
+                  tracker_name:
+                    type: string
+                    example: Running Tracker
+                  description:
+                    type: string
+                    example: Tracking daily running in kilometers
+                  track_type:
+                    type: string
+                    example: Numerical
+                  settings:
+                    type: string
+                    example: Null
+        '404':
+          description: Invalid tracker_id or user_id
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+    delete:
+      description: Operation to delete the tracker resource
+      parameters:
+        - in: path
+          name: tracker_id
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '200':
+          description: Successfully Deleted
+        '404':
+          description: Invalid user_id or tracker_id
+        '500':
+          description: Intenal Server Error
+
+  /api/tracker:
+    description: End point to create tracker resource
+    post:
+      description: Operation to create the tracker resource
+      requestBody:
+        description: track_type can take only 2 possible values - 'Numerical' or 'Multiple_Choice' which is case sensetive, If trac_type is Numerical then settings should be null, In case of Multiple_choice settings should be CSV without spaces
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                  user_id:
+                    type: integer
+                    example: 1
+                  tracker_name:
+                    type: string
+                    example: New Tracker
+                  description:
+                    type: string
+                    example: dummy description
+                  track_type:
+                    type: string
+                    example: Numerical
+                  settings:
+                    type: string
+                    example: Null
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tracker_id:
+                    type: integer
+                    example: 2
+                  user_id:
+                    type: integer
+                    example: 1
+                  tracker_name:
+                    type: string
+                    example: Running Tracker
+                  description:
+                    type: string
+                    example: Tracking daily running in kilometers
+                  track_type:
+                    type: string
+                    example: Numerical
+                  settings:
+                    type: string
+                    example: Null
+        '409':
+          description: user doesnot exist
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+
+
+
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title> Dashboard | QuantifiedSelf </title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icons/favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/custom_validations.js') }}"></script> -->
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">WebSiteName</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="nav navbar-nav me-auto">
+                <li class="active"><a class="nav-link" href="/">Home</a></li>
+                <li><a class="nav-link" href="/contactus">Contact Us</a></li>
+                <li><a class="nav-link" href="/about">About</a></li>
+                <li><a class="nav-link" href="/help" target="blank_">Help</a></li>
+                &nbsp; &nbsp;
+                <!-- <li><a class="nav-link" href="#">Page 3</a></li> -->
+                <span class="navbar-text" style="color: rgb(230, 230, 230);">
+                    <b> Hello, {{userdata["fname"]}}... </b>
+                </span>
+            </ul>
+            <ul class="d-flex">
+                <li class="nav-item">
+                    <a class="btn btn-primary" href="/profile/{{userdata['user_id']}}">Profile</a>
+                </li> &nbsp;
+                <li class="nav-item">
+                    <a class="btn btn-danger" href="/logout">LogOut</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+
+    <div class="mt-3 mb-3">
+        <h1 class="makecenter">Contact Us</h1>
+    </div>
+    <br><br>
+    <div class="mb-3 makecenter shadow" style="padding: 5px;">
+        <p>Hi Users, This is our Contact Us page</p>
+        <p>Please feel free to write us !</p>
+        <p><i><b>Phone Number : </b></i> <b>1234567890</b></p>
+        <p><i><b>Email Address : </b></i> <b>dummy@localhost.com</b></p>
+
+    </div>
+</div>
+</body>
+</html>
