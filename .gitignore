@@ -1,5 +1,6 @@
 .env/
 application/__pycache__/
+static/bootstrap/css/
 static/bootstrap/js/
 static/images/*.png
 static/images/*.jpg

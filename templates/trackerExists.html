@@ -1,43 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Tracker Exists</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icons/favicon.ico') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}"/>
+{% extends "base.html" %}
+{% block title %} Dashboard | QuantifiedSelf {% endblock %}
 
-</head>
-<body>
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">WebSiteName</a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="nav navbar-nav me-auto">
-                    <li class="active"><a class="nav-link" href="/">Home</a></li>
-                    <li><a class="nav-link" href="/contactus">Contact Us</a></li>
-                    <li><a class="nav-link" href="/about">About</a></li>
-                    <li><a class="nav-link" href="/help" target="blank_">Help</a></li>
-                    &nbsp; &nbsp;
-                    <!-- <li><a class="nav-link" href="#">Page 3</a></li> -->
-                    <span class="navbar-text" style="color: rgb(230, 230, 230);">
-                        <b> Hello, {{userdata["fname"]}}... </b>
-                    </span>
-                </ul>
-                <ul class="d-flex">
-                    <li class="nav-item">
-                        <a class="btn btn-primary" href="/profile/{{userdata['user_id']}}">Profile</a>
-                    </li> &nbsp;
-                    <li class="nav-item">
-                        <a class="btn btn-danger" href="/logout">LogOut</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    
+{% block content %}
     <h1>
         This Tracker Name Already Exists. Please Enter a different Tracker Name !
     </h1>
@@ -45,5 +9,4 @@
     <a class="btn btn-success" href="/tracker/create">Create New Tracker</a>
     <br>
     <a class="btn btn-primary" href="/">Go Home</a>
-</body>
-</html>
+{% endblock %}
