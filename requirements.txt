@@ -7,3 +7,4 @@ numpy
 Flask-Bcrypt
 requests
 gunicorn
+psycopg2
