@@ -6,3 +6,4 @@ matplotlib
 numpy
 Flask-Bcrypt
 requests
+gunicorn
