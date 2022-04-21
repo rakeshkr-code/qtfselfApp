@@ -21,7 +21,8 @@ def logIn():
 
         try:
             # UserAPI GET Request and Response..
-            api_userdata = requests.get(f'http://127.0.0.1:5000/api/user/{username}') 
+            # api_userdata = requests.get(f'http://127.0.0.1:5000/api/user/{username}') 
+            api_userdata = requests.get(f'https://qtfself.herokuapp.com/api/user/{username}')
             v1 = api_userdata.status_code
             # api_userdata = api_userdata.content
             # print(api_userdata['username'])
