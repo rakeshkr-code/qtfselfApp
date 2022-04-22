@@ -84,7 +84,7 @@ def register():
         lname = request.form.get('lname')
         password = request.form.get('pass')
 
-        hashed_password = bcrypt.generate_password_hash(password)
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         if usernamevalidation(username) and normalvalidation(fname):
             userobj = User.query.filter_by(username=username).first()
