@@ -50,8 +50,8 @@ class UserAPI(Resource):
             raise InternalServerError(status_code=500)
         print(userobj)  #####
         if userobj:
-            v = {"user_id":userobj.user_id,"username":username,"fname":userobj.fname,"lname":userobj.lname,"password":(userobj.password).decode('UTF-8')}
-            # v = {"user_id":userobj.user_id,"username":username,"fname":userobj.fname,"lname":userobj.lname,"password":userobj.password}
+            # v = {"user_id":userobj.user_id,"username":username,"fname":userobj.fname,"lname":userobj.lname,"password":(userobj.password).decode('UTF-8')}
+            v = {"user_id":userobj.user_id,"username":username,"fname":userobj.fname,"lname":userobj.lname,"password":userobj.password}
 
             print(v)
             return v
