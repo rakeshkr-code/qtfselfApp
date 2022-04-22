@@ -204,6 +204,7 @@ class TrackerAPI(Resource):
         description = args.get("description", None)
         track_type = args.get("track_type", None)
         settings = args.get("settings", None)
+        print("Parsing Done...")
 
         if not idvalidation(user_id):
             print("IDVALIDATION FAILED")
