@@ -199,16 +199,12 @@ class TrackerAPI(Resource):
     def post(self):
         print("creating new tracker")
         args = create_tracker_parser.parse_args()
-        # user_id = args.get("user_id", None)
-        # tracker_name = args.get("tracker_name", None)
-        # description = args.get("description", None)
-        # track_type = args.get("track_type", None)
-        # settings = args.get("settings", None)
-        user_id = args["user_id"]
-        tracker_name = args["tracker_name"]
-        description = args["description"]
-        track_type = args["track_type"]
-        settings = args["settings"]
+        user_id = args.get("user_id", None)
+        tracker_name = args.get("tracker_name", None)
+        description = args.get("description", None)
+        track_type = args.get("track_type", None)
+        settings = args.get("settings", None)
+
         print("Parsing Done...")
 
         if not idvalidation(user_id):
