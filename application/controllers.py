@@ -190,7 +190,7 @@ def createNewTracker():
         trackertype = request.form["trackertype"]
         trackersettings = request.form["trackersettings"]
 
-        api_response = requests.post(f'https://qtfself.herokuapp.com/api/tracker', data={'user_id':user_id, 'tracker_name':trackername, 'description':trackerdescr, 'track_type':trackertype, 'settings':trackersettings})
+        api_response = requests.post(f'https://qtfself.herokuapp.com/api/tracker', json={'user_id':user_id, 'tracker_name':trackername, 'description':trackerdescr, 'track_type':trackertype, 'settings':trackersettings})
         v1 = api_response.status_code
         api_response = api_response.json()
         
