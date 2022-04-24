@@ -2,8 +2,8 @@ import os
 from flask import Flask, session
 # from flask_bcrypt import Bcrypt
 from flask_restful import Resource, Api
-from application import config
-from application.config import HerokuConfig, LocalDevelopmentConfig
+# from application import config
+from application.config import LocalDevelopmentConfig, HerokuProductionConfig
 from application.database import db
 
 
@@ -13,15 +13,20 @@ api = None
 def create_app():
     app = Flask(__name__, template_folder="templates")
 
-    app.secret_key = "thisisasecretkey"  #########################___test
+    # app.secret_key = "thisisasecretkey"  #########################___test
 
-    # if os.getenv('ENV', "development") == "production":
-    #     raise Exception("Currently No Production is setup.")
-    # else:
-    #     print("Starting Local Development..")
-    #     app.config.from_object(LocalDevelopmentConfig)
-    print("Tweaked for Herokuapp...")
-    app.config.from_object(HerokuConfig)
+    if os.getenv('ENV', default=None) == "heroku_production":
+        app.secret_key = os.getenv('SECRET_KEY', default=None) #SECRET_KEY
+        print("Starting Heroku Production Mode...")
+        app.config.from_object(HerokuProductionConfig)
+    elif os.getenv('ENV', default=None) == "local_development":
+        app.secret_key = "thisisasecretkey" #SECRET_KEY
+        print("Starting Local Development[elif]...")
+        app.config.from_object(LocalDevelopmentConfig)
+    else:
+        app.secret_key = "thisisasecretkey" #SECRET_KEY
+        print("Starting Local Development[else]...")
+        app.config.from_object(LocalDevelopmentConfig)
 
     db.init_app(app)
     api = Api(app)

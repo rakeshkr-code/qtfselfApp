@@ -1,3 +1,4 @@
+import os
 import datetime
 import requests
 from flask import Flask, jsonify, request, redirect, session
@@ -21,13 +22,16 @@ def logIn():
 
         try:
             # UserAPI GET Request and Response..
+            if os.getenv('ENV', default=None) == "heroku_production":
+                api_userdata = requests.get(f'https://qtfself.herokuapp.com/api/user/{username}')
+            elif os.getenv('ENV', default=None) == "local_development":
+                api_userdata = requests.get(f'http://127.0.0.1:5000/api/user/{username}') 
+            else:
+                api_userdata = requests.get(f'http://127.0.0.1:5000/api/user/{username}') 
             # api_userdata = requests.get(f'http://127.0.0.1:5000/api/user/{username}') 
-            api_userdata = requests.get(f'https://qtfself.herokuapp.com/api/user/{username}')
+            # api_userdata = requests.get(f'https://qtfself.herokuapp.com/api/user/{username}')
             v1 = api_userdata.status_code
-            # api_userdata = api_userdata.content
-            # print(api_userdata['username'])
             api_userdata = api_userdata.json()
-            # api_userdata = jsonify(api_userdata)
         except:
             return redirect('/login')
 
@@ -156,8 +160,14 @@ def home():
         }
     except:
         return redirect('/login')
-    
-    alltrackers_data = requests.get(f'https://qtfself.herokuapp.com/api/alltrackers/{user_id}')
+
+    if os.getenv('ENV', default=None) == "heroku_production":
+        alltrackers_data = requests.get(f'https://qtfself.herokuapp.com/api/alltrackers/{user_id}')
+    elif os.getenv('ENV', default=None) == "local_development":
+        alltrackers_data = requests.get(f'http://127.0.0.1:5000/api/alltrackers/{user_id}')
+    else:
+        alltrackers_data = requests.get(f'http://127.0.0.1:5000/api/alltrackers/{user_id}')
+
     v1 = alltrackers_data.status_code
     alltrackers = alltrackers_data.json()
 
@@ -190,7 +200,14 @@ def createNewTracker():
         trackertype = request.form["trackertype"]
         trackersettings = request.form["trackersettings"]
 
-        api_response = requests.post(f'https://qtfself.herokuapp.com/api/tracker', json={'user_id':user_id, 'tracker_name':trackername, 'description':trackerdescr, 'track_type':trackertype, 'settings':trackersettings})
+        if os.getenv('ENV', default=None) == "heroku_production":
+            api_response = requests.post(f'https://qtfself.herokuapp.com/api/tracker', json={'user_id':user_id, 'tracker_name':trackername, 'description':trackerdescr, 'track_type':trackertype, 'settings':trackersettings})
+        elif os.getenv('ENV', default=None) == "local_development":
+            api_response = requests.post(f'http://127.0.0.1:5000/api/tracker', json={'user_id':user_id, 'tracker_name':trackername, 'description':trackerdescr, 'track_type':trackertype, 'settings':trackersettings})
+        else:
+            api_response = requests.post(f'http://127.0.0.1:5000/api/tracker', json={'user_id':user_id, 'tracker_name':trackername, 'description':trackerdescr, 'track_type':trackertype, 'settings':trackersettings})
+
+        # api_response = requests.post(f'https://qtfself.herokuapp.com/api/tracker', json={'user_id':user_id, 'tracker_name':trackername, 'description':trackerdescr, 'track_type':trackertype, 'settings':trackersettings})
         v1 = api_response.status_code
         api_response = api_response.json()
         
@@ -249,7 +266,13 @@ def deleteExistingTracker(tracker_id):
 
     if request.method=='GET':
         #get the tracker data from API
-        tracker_data = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
+        if os.getenv('ENV', default=None) == "heroku_production":
+            tracker_data = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
+        elif os.getenv('ENV', default=None) == "local_development":
+            tracker_data = requests.get(f'http://127.0.0.1:5000/api/tracker/{tracker_id}')
+        else:
+            tracker_data = requests.get(f'http://127.0.0.1:5000/api/tracker/{tracker_id}')
+        # tracker_data = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
         v1 = tracker_data.status_code
         tracker_data = tracker_data.json()
         if v1==200 or v1==201:
@@ -273,7 +296,13 @@ def deleteExistingTracker(tracker_id):
 
         if user_id==tracker_data['user_id']:
             #api delete request
-            tracker_data = requests.delete(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
+            if os.getenv('ENV', default=None) == "heroku_production":
+                tracker_data = requests.delete(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
+            elif os.getenv('ENV', default=None) == "local_development":
+                tracker_data = requests.delete(f'http://127.0.0.1:5000/api/tracker/{tracker_id}')
+            else:
+                tracker_data = requests.delete(f'http://127.0.0.1:5000/api/tracker/{tracker_id}')
+            # tracker_data = requests.delete(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
             v1 = tracker_data.status_code
             if v1 != 200:
                 error_head = 'Unknown Error'
@@ -300,7 +329,13 @@ def updateExistingTracker(tracker_id):
 
     if request.method=='GET':
         #get the tracker data from API
-        tracker_data = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
+        if os.getenv('ENV', default=None) == "heroku_production":
+            tracker_data = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
+        elif os.getenv('ENV', default=None) == "local_development":
+            tracker_data = requests.get(f'http://127.0.0.1:5000/api/tracker/{tracker_id}')
+        else:
+            tracker_data = requests.get(f'http://127.0.0.1:5000/api/tracker/{tracker_id}')
+        # tracker_data = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
         v1 = tracker_data.status_code
         tracker_data = tracker_data.json()
         
@@ -319,7 +354,13 @@ def updateExistingTracker(tracker_id):
         trackertype = request.form["trackertype"]
         trackersettings = request.form["trackersettings"]
 
-        tracker_data = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
+        if os.getenv('ENV', default=None) == "heroku_production":
+            tracker_data = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
+        elif os.getenv('ENV', default=None) == "local_development":
+            tracker_data = requests.get(f'http://127.0.0.1:5000/api/tracker/{tracker_id}')
+        else:
+            tracker_data = requests.get(f'http://127.0.0.1:5000/api/tracker/{tracker_id}')
+        # tracker_data = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
         tracker_data = tracker_data.json()
         if user_id!=tracker_data['user_id']:
             error_head = 'Unauthorized Access'
@@ -327,7 +368,13 @@ def updateExistingTracker(tracker_id):
             rt = render_template("errorPage.html", userdata=userdata, error_head=error_head, error_body=error_body)
             return rt
 
-        api_response = requests.put(f'https://qtfself.herokuapp.com//api/tracker/{tracker_id}', data={'tracker_name':trackername, 'description':trackerdescr, 'settings':trackersettings})
+        if os.getenv('ENV', default=None) == "heroku_production":
+            api_response = requests.put(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}', json={'tracker_name':trackername, 'description':trackerdescr, 'settings':trackersettings})
+        elif os.getenv('ENV', default=None) == "local_development":
+            api_response = requests.put(f'http://127.0.0.1:5000/api/tracker/{tracker_id}', json={'tracker_name':trackername, 'description':trackerdescr, 'settings':trackersettings})
+        else:
+            api_response = requests.put(f'http://127.0.0.1:5000/api/tracker/{tracker_id}', json={'tracker_name':trackername, 'description':trackerdescr, 'settings':trackersettings})
+        # api_response = requests.put(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}', json={'tracker_name':trackername, 'description':trackerdescr, 'settings':trackersettings})
         v1 = api_response.status_code
         print("line-5------------")
         api_response = api_response.json()
@@ -378,7 +425,13 @@ def view_aTracker(tracker_id):
         return redirect('/login')
 
     if request.method=='GET':
-        trackerdata = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
+        if os.getenv('ENV', default=None) == "heroku_production":
+            trackerdata = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
+        elif os.getenv('ENV', default=None) == "local_development":
+            trackerdata = requests.get(f'http://127.0.0.1:5000/api/tracker/{tracker_id}')
+        else:
+            trackerdata = requests.get(f'http://127.0.0.1:5000/api/tracker/{tracker_id}')
+        # trackerdata = requests.get(f'https://qtfself.herokuapp.com/api/tracker/{tracker_id}')
         v1 = trackerdata.status_code
         trackerdata = trackerdata.json()
         
@@ -548,7 +601,13 @@ def profile(user_id):
     except:
         return redirect('/login')
     
-    api_userdata = requests.get(f'https://qtfself.herokuapp.com/api/user/{username}')
+    if os.getenv('ENV', default=None) == "heroku_production":
+        api_userdata = requests.get(f'https://qtfself.herokuapp.com/api/user/{username}')
+    elif os.getenv('ENV', default=None) == "local_development":
+        api_userdata = requests.get(f'http://127.0.0.1:5000/api/user/{username}')
+    else:
+        api_userdata = requests.get(f'http://127.0.0.1:5000/api/user/{username}')
+    # api_userdata = requests.get(f'https://qtfself.herokuapp.com/api/user/{username}')
     v1 = api_userdata.status_code
     api_userdata = api_userdata.json()
 

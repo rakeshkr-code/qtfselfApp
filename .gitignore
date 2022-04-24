@@ -1,7 +1,8 @@
 .env/
+.venv/
 application/__pycache__/
 static/bootstrap/css/
 static/bootstrap/js/
 static/images/*.png
-static/images/*.jpg
+# static/images/*.jpg
 *.pdf

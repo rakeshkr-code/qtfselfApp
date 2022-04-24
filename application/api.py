@@ -46,6 +46,7 @@ class UserAPI(Resource):
 
         try:
             userobj = User.query.filter_by(username=username).first()
+            print(userobj)
         except:
             raise InternalServerError(status_code=500)
         print(userobj)  #####
@@ -208,7 +209,6 @@ class TrackerAPI(Resource):
         print("Parsing Done...")
 
         if not idvalidation(user_id):
-            print("IDVALIDATION FAILED")
             raise BusinessValidationError(status_code=400, error_code="TRACKER05", error_message="Invalid user_id/tracker_id, just integer expected")
         else:
             user_id = int(user_id)
@@ -216,21 +216,16 @@ class TrackerAPI(Resource):
         # if (user_id is None) or (not isinstance(user_id, int)):
         #     raise BusinessValidationError(status_code=400, error_code="TRACKER05", error_message="Invalid user_id, integer expected")
         if (tracker_name is None) or (not normalvalidation(tracker_name)):
-            print("TRACKER_NAME VALIDATION FAILED")
             raise BusinessValidationError(status_code=400, error_code="TRACKER01", error_message="Invalid Tracker Name, simple string expected.")
         if (description is None) or (not normalvalidation(description)):
-            print("DESCRIPTION VALIDATION FAILED")
             raise BusinessValidationError(status_code=400, error_code="TRACKER02", error_message="Invalid description, simple string expected.")
         if (track_type is None) or (track_type not in ['Numerical', 'Multiple_Choice']):
-            print("TRACK_TYPE VALIDATION FAILED")
             raise BusinessValidationError(status_code=400, error_code="TRACKER03", error_message="Invalid track_type, accepts only two values - 'Numerical' or 'Multiple_Choice'.")
         if (track_type=='Multiple_Choice') and ((settings is None) or (not csvvalidation(settings))):
-            print("SETTINGS OR CSV VALIDATION FAILED")
             raise BusinessValidationError(status_code=400, error_code="TRACKER02", error_message="Invalid settings, csv values without spaces expected.")
         
         userexist = User.query.get(user_id)
         if userexist is None:
-            print("USER DOESNOT EXIST")
             raise NotFoundError(status_code=409)
             # raise BusinessValidationError(status_code=400, error_code="TRACKER05", error_message="Invalid user_id, user does not exist")
 

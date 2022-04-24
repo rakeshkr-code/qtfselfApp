@@ -22,7 +22,7 @@ if exist ".env" (
 :: . .env/Scripts/activate
 CALL .env\Scripts\activate
 
-set ENV=development
+set ENV=local_development
 python app.py
 
 :: Work done. so deactivate the virtual env

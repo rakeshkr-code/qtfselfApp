@@ -16,7 +16,7 @@ class LocalDevelopmentConfig(Config):
     DEBUG = True
 
 
-class HerokuConfig(Config):
+class HerokuProductionConfig(Config):
     # SQLITE_DB_DIR = os.path.join(basedir, "../db_directory")
-    SQLALCHEMY_DATABASE_URI = "postgresql://ktapjqmkfrtnxm:3c92b4b88806c0d3c507b1ff5f53290b8a3dfe43bd7c95112659552216d3b5ed@ec2-3-211-6-217.compute-1.amazonaws.com:5432/dffqka0nqma9oc"
+    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI', default=None)
     DEBUG = False
