@@ -7,7 +7,7 @@ echo "And then it will install all the required python libraries."
 echo "You can rerun this without any issues."
 echo "----------------------------------------------------------------------"
 
-if exist ".venv" (
+if exist ".env" (
     echo "Enabling virtual env"
 ) else (
 	echo "No Virtual env. Please run setup.sh first"
