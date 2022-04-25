@@ -39,11 +39,11 @@
                 {% if loglist %}
                     {% if trackerdata["track_type"] == "Numerical" %}
                     <div class="card shadow" id="monthcode1">
-                        <img src="{{ url_for('static', filename='images/monthlygraph.png') }}" alt="Trendline Graph is Not available" style="max-height: 250px;">
+                        <img src="{{ url_for('static', filename='images/monthlygraph.png') }}" alt="Trendline Graph is Not available" style="max-height: 250px; min-height: 250px;">
                     </div>
                     {% else %}
                     <div class="card shadow" id="monthcode2">
-                        <img src="{{ url_for('static', filename='images/hist.png') }}" alt="Histogram is Not available" style="max-height: 250px;">
+                        <img src="{{ url_for('static', filename='images/hist.png') }}" alt="Histogram is Not available" style="max-height: 250px; min-height: 250px;">
                     </div>
                     {% endif %}
                 {% else %}
@@ -78,26 +78,26 @@
             <!-- Code correct table -->
             <div class="rightside">
                 <div class="card shadow-sm overflow-auto">
-                <table class="table table-info table-striped table-hover table-bordered border-dark">
-                    <thead>
-                    <tr>
-                        <th> Timestamp </th>
-                        <th>Value</th>
-                        <th>Comment</th>
-                        <th>Actions</th>
+                <table class="table table-info table-striped table-hover table-bordered border-dark scroll">
+                    <thead class="scroll">
+                    <tr class="scroll">
+                        <th class="scroll"> Timestamp </th>
+                        <th class="scroll">Value</th>
+                        <th class="scroll">Comment</th>
+                        <th class="scroll">Actions</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="scroll">
                     {% for log in loglist %}
-                        <tr>
-                            <td>{{log["timestamp"]}}</td>
-                            <td> {{log["value"]}}
+                        <tr class="scroll">
+                            <td class="scroll">{{log["timestamp"]}}</td>
+                            <td class="scroll"> {{log["value"]}}
                                 
                             </td>
-                            <td> {{log["note"]}}
+                            <td class="scroll"> {{log["note"]}}
                                
                             </td>
-                            <td>
+                            <td class="scroll">
                                 <div class="makecenter">
                                     <a class="btn btn-warning" href="/log/{{log['log_id']}}/update">Edit</a>
                                     <a class="btn btn-danger" href="/log/{{log['log_id']}}/delete">Delete</a>

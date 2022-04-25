@@ -57,3 +57,24 @@ body{
     width: 150px;
     border-radius: 50%;
 }
+/* For ScrollBar... */
+table.scroll {
+    /* width: 100%;  */
+    border-spacing: 0;
+}
+
+tbody.scroll, thead.scroll tr.scroll { display: block; }
+
+tbody.scroll {
+    height: 120px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tbody.scroll td.scroll, thead.scroll th.scroll {
+    width: 140px;
+}
+
+thead.scroll th.scroll:last-child {
+    width: 156px;
+}
