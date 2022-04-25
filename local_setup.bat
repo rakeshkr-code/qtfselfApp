@@ -10,8 +10,8 @@ echo "----------------------------------------------------------------------"
 if exist ".env" (
     echo ".env folder exists. Installing using pip"
 ) else (
-    echo "creating .env and install using pip"
-	python -m venv .env
+    echo "creating .venv and install using pip"
+	python -m venv .venv
 )
 	rem python -m venv .env
     rem python3.7 -m venv .env

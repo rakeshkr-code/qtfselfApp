@@ -1,4 +1,4 @@
-.env/
+.env
 .venv/
 application/__pycache__/
 static/bootstrap/css/
