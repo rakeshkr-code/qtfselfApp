@@ -3,6 +3,7 @@
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib import rcParams
 import numpy as np
 
 
@@ -106,13 +107,23 @@ def getmonthlyDatanum(loglist, lastlog, tname):
         templ = mappingdict[k]
         yval.append(float(sum(templ)/len(templ)))
 
+    lowest, highest = min(yval), max(yval)
+    lowlim = int(lowest - (highest-lowest)/2)
+    highlim = int(highest + (highest-lowest)/2)
+
     x = np.array(xdate)
     y = np.array(yval)
+    rcParams['figure.figsize'] = 8, 5
     plt.plot(x,y)
+    plt.ylim(lowlim, highlim)
     plt.xlabel("Date-->")
     plt.ylabel(str(tname)+" value-->")
     plt.savefig('static/images/monthlygraph.png')
     plt.clf()
+
+
+def getoverallDatanum(loglist, lastlog, tname):
+    pass
 
 
 def getmonthlyDatamcq(loglist, lastlog, tname, allvars):
@@ -127,6 +138,7 @@ def getmonthlyDatamcq(loglist, lastlog, tname, allvars):
 
     names = list(mappingdict.keys())
     values = list(mappingdict.values())
+    rcParams['figure.figsize'] = 8, 5
     fig, axs = plt.subplots(1, 1, figsize=(9, 3), sharey=True)
     axs.bar(names, values)
     plt.xlabel("Date-->")

@@ -441,8 +441,10 @@ def view_aTracker(tracker_id):
             rt = render_template("errorPage.html", userdata=userdata, error_head=error_head, error_body=error_body)
             return rt
 
-        loglist = TrackerLog.query.filter_by(user_id=user_id, tracker_id=tracker_id).all()
-        lastlog = TrackerLog.query.filter_by(tracker_id=tracker_id,user_id=user_id).order_by(TrackerLog.timestamp.desc()).limit(1).first()
+        loglist = TrackerLog.query.filter_by(user_id=user_id, tracker_id=tracker_id).order_by(TrackerLog.timestamp.asc()).all()
+        # print(loglist)
+        lastlog = loglist[-1]
+        # lastlog = TrackerLog.query.filter_by(tracker_id=tracker_id,user_id=user_id).order_by(TrackerLog.timestamp.desc()).limit(1).first()
         tname = trackerdata['tracker_name']
 
         #Function Call For Graph Plotting..
