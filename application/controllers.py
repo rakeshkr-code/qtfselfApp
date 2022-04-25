@@ -443,7 +443,10 @@ def view_aTracker(tracker_id):
 
         loglist = TrackerLog.query.filter_by(user_id=user_id, tracker_id=tracker_id).order_by(TrackerLog.timestamp.asc()).all()
         # print(loglist)
-        lastlog = loglist[-1]
+        if loglist:
+            lastlog = loglist[-1]
+        else:
+            lastlog = None
         # lastlog = TrackerLog.query.filter_by(tracker_id=tracker_id,user_id=user_id).order_by(TrackerLog.timestamp.desc()).limit(1).first()
         tname = trackerdata['tracker_name']
 

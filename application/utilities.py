@@ -108,14 +108,18 @@ def getmonthlyDatanum(loglist, lastlog, tname):
         yval.append(float(sum(templ)/len(templ)))
 
     lowest, highest = min(yval), max(yval)
-    lowlim = int(lowest - (highest-lowest)/2)
-    highlim = int(highest + (highest-lowest)/2)
+    # lowlim = int(lowest - (highest-lowest)/2)
+    # highlim = int(highest + (highest-lowest)/2)
+    lowlim = (lowest - (highest-lowest)/2)
+    highlim = (highest + (highest-lowest)/2)
 
     x = np.array(xdate)
     y = np.array(yval)
     rcParams['figure.figsize'] = 8, 5
     plt.plot(x,y)
     plt.ylim(lowlim, highlim)
+    # if highlim-lowlim>1:
+    #     plt.ylim(lowlim, highlim)
     plt.xlabel("Date-->")
     plt.ylabel(str(tname)+" value-->")
     plt.savefig('static/images/monthlygraph.png')

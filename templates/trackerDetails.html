@@ -88,6 +88,7 @@
                     </tr>
                     </thead>
                     <tbody class="scroll">
+                    {% if loglist %}
                     {% for log in loglist %}
                         <tr class="scroll">
                             <td class="scroll">{{log["timestamp"]}}</td>
@@ -106,6 +107,9 @@
                             </td>
                         </tr>
                     {% endfor %}
+                    {% else %}
+                        <tr class="scroll">No logs yet recorded. Please add a new Log.</tr>
+                    {% endif %}
                     </tbody>
                 </table>
                 <div class="makecenter">
