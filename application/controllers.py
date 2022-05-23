@@ -11,6 +11,19 @@ from application.utilities import *
 
 bcrypt = Bcrypt(app) #<-For Password Encryption
 
+# My Custom LogIn Required Decorator
+def myLoginReq(func):
+    def inner(*args, **kwargs):
+        try:
+            user_id = session['user_id']
+            username = session['username']
+            fname = session['user_fname']
+        except:
+            return redirect('/login')
+        return func(*args, **kwargs)
+    inner.__name__ = func.__name__
+    return inner
+
 
 
 ### LOGIN PAGE..🚨👮‍♂️🚔👮‍♂️🚓👮‍♂️🚨
@@ -112,55 +125,46 @@ def register():
     # return v
 
 @app.route('/contactus')
+@myLoginReq
 def contactus():
-    try:
-        user_id = session['user_id']
-        username = session['username']
-        fname = session['user_fname']
-        userdata = {
-            'user_id': user_id,
-            'username': username,
-            'fname': fname
-        }
-    except:
-        return redirect('/login')
-    
+    user_id = session['user_id']
+    username = session['username']
+    fname = session['user_fname']
+    userdata = {
+        'user_id': user_id,
+        'username': username,
+        'fname': fname
+    }
     v = render_template("contactus.html", userdata=userdata)
     return v
 
 @app.route('/about')
+@myLoginReq
 def about():
-    try:
-        user_id = session['user_id']
-        username = session['username']
-        fname = session['user_fname']
-        userdata = {
-            'user_id': user_id,
-            'username': username,
-            'fname': fname
-        }
-    except:
-        return redirect('/login')
-    
+    user_id = session['user_id']
+    username = session['username']
+    fname = session['user_fname']
+    userdata = {
+        'user_id': user_id,
+        'username': username,
+        'fname': fname
+    }
     v = render_template("about.html", userdata=userdata)
     return v
 
 
 ### HOME PAGE / DASHBOARD...🏡✨🏠✨🏡
 @app.route('/', methods=['GET', 'POST'])
+@myLoginReq
 def home():
-    try:
-        user_id = session['user_id']
-        username = session['username']
-        fname = session['user_fname']
-        userdata = {
-            'user_id': user_id,
-            'username': username,
-            'fname': fname
-        }
-    except:
-        return redirect('/login')
-
+    user_id = session['user_id']
+    username = session['username']
+    fname = session['user_fname']
+    userdata = {
+        'user_id': user_id,
+        'username': username,
+        'fname': fname
+    }
     if os.getenv('ENV', default=None) == "heroku_production":
         alltrackers_data = requests.get(f'https://qtfself.herokuapp.com/api/alltrackers/{user_id}')
     elif os.getenv('ENV', default=None) == "local_development":
@@ -178,18 +182,17 @@ def home():
 
 # CREATE NEW TRACKER..
 @app.route('/tracker/create', methods=['GET', 'POST'])
+@myLoginReq
 def createNewTracker():
-    try:
-        user_id = session['user_id']
-        username = session['username']
-        fname = session['user_fname']
-        userdata = {
-            'user_id': user_id,
-            'username': username,
-            'fname': fname
-        }
-    except:
-        return redirect('/login')
+    user_id = session['user_id']
+    username = session['username']
+    fname = session['user_fname']
+    userdata = {
+        'user_id': user_id,
+        'username': username,
+        'fname': fname
+    }
+
     if request.method=='GET':
         v = render_template("createTracker.html", user_id=user_id, userdata=userdata)
         return v
@@ -251,18 +254,16 @@ def createNewTracker():
 
 # DELETE EXISTING TRACKER..
 @app.route('/tracker/<int:tracker_id>/delete', methods=['GET', 'POST'])
+@myLoginReq
 def deleteExistingTracker(tracker_id):
-    try:
-        user_id = session['user_id']
-        username = session['username']
-        fname = session['user_fname']
-        userdata = {
-            'user_id': user_id,
-            'username': username,
-            'fname': fname
-        }
-    except:
-        return redirect('/login')
+    user_id = session['user_id']
+    username = session['username']
+    fname = session['user_fname']
+    userdata = {
+        'user_id': user_id,
+        'username': username,
+        'fname': fname
+    }
 
     if request.method=='GET':
         #get the tracker data from API
@@ -314,18 +315,16 @@ def deleteExistingTracker(tracker_id):
 
 # UPDATE EXISTING TRACKER..
 @app.route('/tracker/<int:tracker_id>/update', methods=['GET', 'POST'])
+@myLoginReq
 def updateExistingTracker(tracker_id):
-    try:
-        user_id = session['user_id']
-        username = session['username']
-        fname = session['user_fname']
-        userdata = {
-            'user_id': user_id,
-            'username': username,
-            'fname': fname
-        }
-    except:
-        return redirect('/login')
+    user_id = session['user_id']
+    username = session['username']
+    fname = session['user_fname']
+    userdata = {
+        'user_id': user_id,
+        'username': username,
+        'fname': fname
+    }
 
     if request.method=='GET':
         #get the tracker data from API
@@ -411,18 +410,16 @@ def updateExistingTracker(tracker_id):
 
 # VIEW DETAILS OF AN EXISTING TRACKER..
 @app.route('/tracker/<int:tracker_id>/read', methods=['GET', 'POST'])
+@myLoginReq
 def view_aTracker(tracker_id):
-    try:
-        user_id = session['user_id']
-        username = session['username']
-        fname = session['user_fname']
-        userdata = {
-            'user_id': user_id,
-            'username': username,
-            'fname': fname
-        }
-    except:
-        return redirect('/login')
+    user_id = session['user_id']
+    username = session['username']
+    fname = session['user_fname']
+    userdata = {
+        'user_id': user_id,
+        'username': username,
+        'fname': fname
+    }
 
     if request.method=='GET':
         if os.getenv('ENV', default=None) == "heroku_production":
@@ -469,18 +466,16 @@ def view_aTracker(tracker_id):
 
 # CREATE NEW LOG
 @app.route('/log/<int:tracker_id>/create', methods=['GET', 'POST'])
+@myLoginReq
 def createNewLog(tracker_id):
-    try:
-        user_id = session['user_id']
-        username = session['username']
-        fname = session['user_fname']
-        userdata = {
-            'user_id': user_id,
-            'username': username,
-            'fname': fname
-        }
-    except:
-        return redirect('/login')
+    user_id = session['user_id']
+    username = session['username']
+    fname = session['user_fname']
+    userdata = {
+        'user_id': user_id,
+        'username': username,
+        'fname': fname
+    }
     
     if request.method=='GET':
         trackerdata = Tracker.query.get(tracker_id)
@@ -518,18 +513,17 @@ def createNewLog(tracker_id):
 
 # UPDATE EXISTING LOG
 @app.route('/log/<int:log_id>/update', methods=['GET', 'POST'])
+@myLoginReq
 def updateExistingLog(log_id):
-    try:
-        user_id = session['user_id']
-        username = session['username']
-        fname = session['user_fname']
-        userdata = {
-            'user_id': user_id,
-            'username': username,
-            'fname': fname
-        }
-    except:
-        return redirect('/login')
+    user_id = session['user_id']
+    username = session['username']
+    fname = session['user_fname']
+    userdata = {
+        'user_id': user_id,
+        'username': username,
+        'fname': fname
+    }
+
     if request.method=='GET':
         logdata = TrackerLog.query.get(log_id)
         trackerdata = Tracker.query.get(logdata.tracker_id)
@@ -568,18 +562,16 @@ def updateExistingLog(log_id):
 
 # DELETE EXISTING LOG..
 @app.route('/log/<int:log_id>/delete', methods=['GET', 'POST'])
+@myLoginReq
 def deleteExistingLog(log_id):
-    try:
-        user_id = session['user_id']
-        username = session['username']
-        fname = session['user_fname']
-        userdata = {
-            'user_id': user_id,
-            'username': username,
-            'fname': fname
-        }
-    except:
-        return redirect('/login')
+    user_id = session['user_id']
+    username = session['username']
+    fname = session['user_fname']
+    userdata = {
+        'user_id': user_id,
+        'username': username,
+        'fname': fname
+    }
 
     if request.method=='GET':
         #get the log object
@@ -593,18 +585,16 @@ def deleteExistingLog(log_id):
 
 
 @app.route('/profile/<int:user_id>')
+@myLoginReq
 def profile(user_id):
-    try:
-        user_id = session['user_id']
-        username = session['username']
-        fname = session['user_fname']
-        userdata = {
-            'user_id': user_id,
-            'username': username,
-            'fname': fname
-        }
-    except:
-        return redirect('/login')
+    user_id = session['user_id']
+    username = session['username']
+    fname = session['user_fname']
+    userdata = {
+        'user_id': user_id,
+        'username': username,
+        'fname': fname
+    }
     
     if os.getenv('ENV', default=None) == "heroku_production":
         api_userdata = requests.get(f'https://qtfself.herokuapp.com/api/user/{username}')
